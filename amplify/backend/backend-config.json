@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "babysitterc7a354a6": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

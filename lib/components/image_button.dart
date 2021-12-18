@@ -1,17 +1,20 @@
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:flutter/material.dart';
-
-class Button extends StatelessWidget {
-  Button(this.title,this.size);
+import 'package:flutter_svg/flutter_svg.dart';
+class ImageButton extends StatelessWidget {
+  ImageButton(this.title,this.size,this.svgImage,this.color);
   final String title;
   final Size size;
+  final String svgImage;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
 
-      width: size.width/1.5,
-      height: size.height/8,
+      width: size.width,
+      height: size.height/10,
+
 
 
 
@@ -20,16 +23,16 @@ class Button extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Positioned(
-            top: 30,
-            left: 30,
+            top: 20,
+            left: 40,
             child: Container(
 
-              width: size.width/1.8,
+              width: size.width/1.2,
               height: size.height/16,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(color: Colors.black,width: 1),
-                color: ThemeColor.secondaryColor,
+                color: ThemeColor.tertiaryColor,
 
               ),
 
@@ -38,13 +41,15 @@ class Button extends StatelessWidget {
             ),
           ),
           Container(
-            width: size.width/1.8,
+            width: size.width/1.2,
             height: size.height/16,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+
 
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               border: Border.all(color: Colors.black,width: 1),
-              color: ThemeColor.primaryColor,
+              color: color,
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black,
@@ -54,7 +59,22 @@ class Button extends StatelessWidget {
                 )
               ],
             ),
-            child:  Center(child: Text(title)),
+            child:  Center(child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SvgPicture.asset(
+                  svgImage,
+
+                  height: 24,
+                  width: 24,
+                  fit: BoxFit.cover,
+                    color: Colors.white
+
+
+                ),
+                Text(title,style: TextStyle(color: Colors.white),),
+              ],
+            )),
           ),
 
         ],),

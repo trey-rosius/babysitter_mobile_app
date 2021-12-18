@@ -1,11 +1,15 @@
 import 'package:babysitter/components/button.dart';
-import 'package:babysitter/screens/login_screen.dart';
+import 'package:babysitter/screens/login/login_screen.dart';
+import 'package:babysitter/utils/app_theme.dart';
+import 'package:babysitter/utils/size_config.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../app_theme.dart';
 
 class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
+
 
 
   @override
@@ -15,6 +19,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(preferredSize: Size.fromHeight(800),child: Container(
@@ -52,7 +57,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       height: size.height/2.2,
 
                       decoration: const BoxDecoration(
-                          color: AppTheme.primaryColor,
+                          color: ThemeColor.primaryColor,
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(100),topRight: Radius.circular(100))
                       ),
 
@@ -74,10 +79,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         )
                       ],
                     ),
-                    child:
-
-
-                    Column(
+                    child: Column(
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
