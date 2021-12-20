@@ -270,9 +270,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                  const Text("Already have an account ?",style: TextStyle(color: Colors.black),),
                                  TextButton(onPressed: (){
                                    Navigator.of(context).pop();
+
                                    Navigator.push(context, MaterialPageRoute(builder: (context){
                                      return  LoginScreen();
                                    }));
+
+
                                  }, child: const Text("log in",style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold,fontSize: 17),))
                                ],
                              )

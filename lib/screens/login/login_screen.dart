@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:babysitter/components/button.dart';
 import 'package:babysitter/components/image_button.dart';
 import 'package:babysitter/screens/login/register_screen.dart';
+import 'package:babysitter/screens/select_user_type.dart';
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:babysitter/utils/size_config.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: Text('login',style: TextStyle(color: Colors.black),),
+          title: Text('log in',style: TextStyle(color: Colors.black),),
 
         ),
           body:
@@ -77,12 +78,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: TextFormField(
 
                                     controller: loginRep.usernameController,
-                                    style: TextStyle(color: Colors.white),
+
                                     decoration: InputDecoration(
                                       fillColor: Colors.white,
                                       filled: true,
 
-                                      prefixIcon: Icon(Icons.account_circle,color:ThemeColor.color1),
+                                      prefixIcon: Icon(Icons.account_circle,),
 
                                       border: OutlineInputBorder(
 
@@ -134,11 +135,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: TextFormField(
                                     controller: loginRep.passwordController,
                                     obscureText: loginRep.obscureText,
-                                    style: TextStyle(color: Colors.white),
+
                                     decoration: InputDecoration(
                                       fillColor: Colors.white,
                                       filled: true,
-                                      prefixIcon: Icon(Icons.vpn_key,color:ThemeColor.color1),
+                                      prefixIcon: Icon(Icons.lock),
                                       border: OutlineInputBorder(
                                         borderSide: BorderSide(color:(Colors.grey[700])!, width: 2.toWidth),
                                         borderRadius: BorderRadius.all(
@@ -165,7 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       ),
                                       suffixIcon: IconButton(
-                                        color: Colors.black,
                                         icon: Icon(
                                           loginRep.obscureText ? Icons.visibility : Icons.visibility_off,
                                         ),
@@ -234,16 +234,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   children: [
                                     Text("Don't have an account ?",style: TextStyle(color:Colors.black),),
                                     TextButton(onPressed: (){
-                                      /*
-                                      Navigator.push(context, MaterialPageRoute(builder: (context){
-
-                                       // return RegisterScreen();
+                                     Navigator.pop(context);
 
 
-                                      }));
-
-                                       */
-                                    }, child: Text("Register",style: TextStyle(fontWeight: FontWeight.bold,color: ThemeColor.color1),)),
+                                    }, child: Text("Register",style: TextStyle(fontWeight: FontWeight.bold),)),
                                   ],
                                 )
 
@@ -255,20 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           )),
                     ),
-                    Container(
 
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-
-
-                          ImageButton('login with google',size,'assets/images/google.svg',Color(0xFFde5246)),
-                         // ImageButton('login with apple',size,'assets/images/apple.svg',Color(0xFF000000)),
-                          ImageButton('login with facebook',size,'assets/images/facebook.svg',Color(0xFF3b5998)),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),

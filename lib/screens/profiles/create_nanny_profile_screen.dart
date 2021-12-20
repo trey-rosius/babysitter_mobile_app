@@ -1,10 +1,9 @@
 
 import 'dart:io';
 import 'dart:ui';
-
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:babysitter/components/button.dart';
 import 'package:babysitter/utils/app_theme.dart';
+import 'package:babysitter/utils/date_manipulations.dart';
 import 'package:babysitter/utils/size_config.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:provider/provider.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_repository.dart';
 
 class CreateNannyProfileScreen extends StatefulWidget {
@@ -37,6 +36,33 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
 
 
 
+  //Future<File> _imageFile;
+  DateTime selectedDate = DateTime(2003);
+
+  Future<Null> _selectDate(BuildContext context,ProfileRepository profileRepository) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1960),
+        lastDate: DateTime(2003));
+    if (picked != null && picked != selectedDate)
+
+        profileRepository.day = picked.day;
+        profileRepository.month = picked?.month;
+        profileRepository.year = picked?.year;
+        selectedDate = picked!;
+        print(picked.day.toString());
+        print(picked.month.toString());
+        print(picked.year.toString());
+        profileRepository.dateOfBirthController.text = '${picked.day} / ${picked.month} / ${picked.year}';
+    bool leapYear =
+    DateManipulations().checkLeapYear(selectedDate.year);
+
+    String age = DateManipulations().calculateDob(picked.toString(), leapYear);
+    print("You're " +age+" yrs old");
+    profileRepository.age = int.parse(age);
+
+  }
 
 
 
@@ -287,123 +313,131 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                   children: [
 
 
-                    Container(
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Container(
 
-                      margin: const EdgeInsets.only(top: 20),
-                      child: TextFormField(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: TextFormField(
 
-                        controller: profileRepo.firstNamesController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
+                            controller: profileRepo.firstNamesController,
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
 
-                          border: OutlineInputBorder(
+                              border: OutlineInputBorder(
 
-                            borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
+                                borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+
+                                borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: ThemeColor.primaryColor, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              labelText: 'first name',
+
+                              labelStyle: TextStyle(color: ThemeColor.black),
+                              hintText: "first name",
+                              hintStyle: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 15.toFont,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-
-                            borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: ThemeColor.primaryColor, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
-                            ),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
-                            ),
-                          ),
-                          labelText: 'first name',
-
-                          labelStyle: TextStyle(color: ThemeColor.black),
-                          hintText: "first name",
-                          hintStyle: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 15.toFont,
-                            fontWeight: FontWeight.bold,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'first name';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'first name';
-                          }
-                          return null;
-                        },
                       ),
-                    ),
-                    Container(
+                      Flexible(
+                        child: Container(
 
-                      margin: const EdgeInsets.only(top: 20),
-                      child: TextFormField(
+                          margin: const EdgeInsets.only(top: 20,left: 10),
+                          child: TextFormField(
 
-                        controller: profileRepo.lastNamesController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
+                            controller: profileRepo.lastNamesController,
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
 
-                          border: OutlineInputBorder(
+                              border: OutlineInputBorder(
 
-                            borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
+                                borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+
+                                borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: ThemeColor.primaryColor, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.toWidth),
+                                ),
+                              ),
+                              labelText: 'last name',
+
+                              labelStyle: TextStyle(color: ThemeColor.black),
+                              hintText: "last name",
+                              hintStyle: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 15.toFont,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-
-                            borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: ThemeColor.primaryColor, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
-                            ),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: (Colors.grey[700])!, width: 2.toWidth),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.toWidth),
-                            ),
-                          ),
-                          labelText: 'last name',
-
-                          labelStyle: TextStyle(color: ThemeColor.black),
-                          hintText: "last name",
-                          hintStyle: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 15.toFont,
-                            fontWeight: FontWeight.bold,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'last name';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'last name';
-                          }
-                          return null;
-                        },
                       ),
-                    ),
+                    ],
+                  ),
                     Container(
 
                       margin: const EdgeInsets.only(top: 20),
                       child: TextFormField(
 
                         controller: profileRepo.aboutController,
-                        maxLines: 4,
+                        maxLines: 3,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           fillColor: Colors.white,
@@ -457,7 +491,7 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                       margin: const EdgeInsets.only(top: 20),
 
                       child: TextFormField(
-                          maxLines: 4,
+                          maxLines: 2,
                         controller: profileRepo.addressController,
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
@@ -509,6 +543,162 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                       ),
                     ),
 
+                    InkWell(
+                      onTap:(){
+                        _selectDate(context,profileRepo);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                           vertical: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "My date of birth is ..",
+                              style: TextStyle(
+                                  fontSize: 17, color: Colors.black),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              margin:
+                              EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.grey, width: 1),
+                                  borderRadius:
+                                  BorderRadius.circular(10)),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  profileRepo.dateOfBirthController.text
+                                      .isEmpty
+                                      ? Text(
+                                    "DD/MM'YYYY",
+                                    style:
+                                    TextStyle(fontSize: 20),
+                                  )
+                                      : Text(
+                                      profileRepo
+                                          .dateOfBirthController
+                                          .text,
+                                      style:
+                                      TextStyle(fontSize: 20)),
+                                  Icon(Icons.calendar_today)
+                                ],
+                              ),
+                            ),
+                            Text(
+                              "You are "+profileRepo.age.toString()+" yrs old",
+                              style: TextStyle(
+                                  fontSize: 17, color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        vertical: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "I am a..",
+                            style: TextStyle(
+                                fontSize: 17, color: Colors.black),
+                          ),
+                          Container(
+                            margin:
+                            EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap:(){
+                                    //profileRepo.onSexSelected();
+
+                                  },
+                                  child: Container(
+
+                                    margin: EdgeInsets.only(right: 20),
+                                    padding: EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: profileRepo.male ? Colors.red : Colors.grey,
+                                            width: 1),
+                                        borderRadius:
+                                        BorderRadius.circular(10)),
+                                    child: Row(children: [
+                                      SvgPicture.asset(
+                                        'assets/images/male.svg',
+
+                                        height: 24,
+                                        width: 24,
+                                        fit: BoxFit.cover,
+
+
+
+                                      ),
+
+                                      Container(
+
+                                          padding:
+                                          EdgeInsets.only(left: 10),
+                                          child: Text(
+                                            "Male",
+                                            style:
+                                            TextStyle(fontSize: 20),
+                                          ))
+                                    ]),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                   // profileRepo.onSexSelected(),
+                                  },
+                                  child: Container(
+
+                                    padding: EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: profileRepo.female ? Colors.red : Colors.grey,
+                                            width: 1),
+                                        borderRadius:
+                                        BorderRadius.circular(10)),
+                                    child: Row(children: [
+                                      SvgPicture.asset(
+                                        'assets/images/female.svg',
+
+                                        height: 24,
+                                        width: 24,
+                                        fit: BoxFit.cover,
+
+
+
+                                      ),
+
+                                      Container(
+
+                                          padding:
+                                          EdgeInsets.only(left: 10),
+                                          child: Text(
+                                            "Female",
+                                            style:
+                                            TextStyle(fontSize: 20),
+                                          ))
+                                    ]),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
 
                   ],
                 ),
@@ -535,6 +725,13 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
 
                          } else {
                            form.save();
+
+                           if(profileRepo.age <=0){
+                             profileRepo.showInSnackBar(context,"date of birth is empty");
+                             return;
+                           }
+
+
 
                            print(profileRepo.profilePic);
                            print(profileRepo.firstNamesController.text);

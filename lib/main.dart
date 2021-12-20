@@ -1,6 +1,7 @@
 
 
 import 'package:babysitter/screens/select_user_type.dart';
+import 'package:babysitter/screens/welcome_screen.dart';
 
 
 import 'package:babysitter/utils/app_theme.dart';
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: const Color(0xFFfcce01), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0XFFd6ecff))
       ),
 
-      home: SelectUserTypeScreen()
+      home: WelcomeScreen()
 
 
 

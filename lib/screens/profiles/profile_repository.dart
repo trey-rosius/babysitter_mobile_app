@@ -21,6 +21,7 @@ class ProfileRepository extends ChangeNotifier {
   final lastNamesController = TextEditingController();
   final addressController = TextEditingController();
   final aboutController = TextEditingController();
+  final dateOfBirthController = TextEditingController();
 
 
 
@@ -33,6 +34,38 @@ class ProfileRepository extends ChangeNotifier {
   double _longitude = 0.0;
   double _latitude = 0.0;
 
+  int _day =0;
+  int _month =0;
+
+
+  int _year=0;
+
+  int _age = 0;
+
+
+  int get age => _age;
+
+  set age(int value) {
+    _age = value;
+    notifyListeners();
+  }
+  int get day => _day;
+
+  set day(int value) {
+    _day = value;
+    notifyListeners();
+  }
+
+  bool _male = false;
+  bool _female = true;
+
+
+  bool get male => _male;
+
+  set male(bool value) {
+    _male = value;
+    notifyListeners();
+  }
 
   double get longitude => _longitude;
 
@@ -87,7 +120,12 @@ class ProfileRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get female => _female;
 
+  set female(bool value) {
+    _female = value;
+    notifyListeners();
+  }
 
   bool get loading => _loading;
 
@@ -100,10 +138,10 @@ class ProfileRepository extends ChangeNotifier {
 
   void showInSnackBar(BuildContext context,String value) {
     ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
-      content:  Text(
+      content: Text(
         value,
         textAlign: TextAlign.center,
-        style: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0),
+        style: TextStyle( fontSize: 20.0),
       ),
       backgroundColor: Theme.of(context).colorScheme.secondary,
     ));
@@ -161,6 +199,7 @@ class ProfileRepository extends ChangeNotifier {
     lastNamesController.dispose();
    addressController.dispose();
   aboutController.dispose();
+    dateOfBirthController.dispose();
 
 
     super.dispose();
@@ -249,6 +288,20 @@ class ProfileRepository extends ChangeNotifier {
 
   set latitude(double value) {
     _latitude = value;
+    notifyListeners();
+  }
+
+  get month => _month;
+
+  set month(value) {
+    _month = value;
+    notifyListeners();
+  }
+
+  get year => _year;
+
+  set year(value) {
+    _year = value;
     notifyListeners();
   }
 }

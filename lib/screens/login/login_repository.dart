@@ -6,8 +6,6 @@ import 'package:babysitter/utils/signin_web_client_metadata.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 
 class LoginRepository extends ChangeNotifier{
 
@@ -16,6 +14,7 @@ class LoginRepository extends ChangeNotifier{
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
   final codeController = TextEditingController();
+
   bool _isSignedIn = false;
   bool _loading = false;
   bool _obscureText = true;

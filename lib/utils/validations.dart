@@ -10,7 +10,7 @@ class Validations {
   static String? validatePassword(String value) {
     if (value.trim().isEmpty) return "Enter password";
     if (value.trim().length < 6) {
-      return "Password should be greater then 6 character.";
+      return "Password should be greater then 6 characters.";
     }
     return null;
   }
