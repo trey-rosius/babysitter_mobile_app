@@ -19,8 +19,16 @@ class LoginRepository extends ChangeNotifier{
   bool _isSignedIn = false;
   bool _loading = false;
   bool _obscureText = true;
-  bool _isParent = true;
-  bool _isNanny = false;
+ bool _isValidEmail = false;
+
+
+  bool get isValidEmail => _isValidEmail;
+
+  set isValidEmail(bool value) {
+    _isValidEmail = value;
+    notifyListeners();
+  }
+
   String _groupName = 'parent';
 
 
@@ -31,19 +39,7 @@ class LoginRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  bool get isParent => _isParent;
 
-  set isParent(bool value) {
-    _isParent = value;
-    notifyListeners();
-  }
-
-  bool get isNanny => _isNanny;
-
-  set isNanny(bool value) {
-    _isNanny = value;
-    notifyListeners();
-  }
 
   bool get obscureText => _obscureText;
 

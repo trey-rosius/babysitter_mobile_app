@@ -13,12 +13,7 @@
     },
     "categories": {
       "auth": {
-        "babysitterc7a354a6": {
-          "userPoolId": "us-east-2_9pF4P6HMj",
-          "userPoolName": "babysitter-UserPool",
-          "webClientId": "37k56tfillnu09p3d0cs6f9tqt",
-          "nativeClientId": "37k56tfillnu09p3d0cs6f9tqt"
-        }
+        "babysitterb31fbeb7": {}
       }
     }
   }

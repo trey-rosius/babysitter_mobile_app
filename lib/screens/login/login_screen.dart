@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'login_repository.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen();
+
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -60,17 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
       margin: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
-      decoration: BoxDecoration( color: ThemeColor.cardBackground, border: Border.all(color: Colors.black,width:2),
-      borderRadius: BorderRadius.all(
-      Radius.circular(10.toWidth),
-      ), boxShadow: const [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 2.0,
-            spreadRadius: 0.0,
-            offset: Offset(2.0, 2.0), // shadow direction: bottom right
-          )
-        ],),
+
 
 
                       child: Form(
@@ -244,12 +234,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   children: [
                                     Text("Don't have an account ?",style: TextStyle(color:Colors.black),),
                                     TextButton(onPressed: (){
+                                      /*
                                       Navigator.push(context, MaterialPageRoute(builder: (context){
 
-                                        return RegisterScreen();
+                                       // return RegisterScreen();
 
 
                                       }));
+
+                                       */
                                     }, child: Text("Register",style: TextStyle(fontWeight: FontWeight.bold,color: ThemeColor.color1),)),
                                   ],
                                 )

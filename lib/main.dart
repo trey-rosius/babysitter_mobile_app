@@ -1,7 +1,7 @@
 
 
-import 'package:babysitter/screens/welcome_screen.dart';
-import 'package:babysitter/utils/size_config.dart';
+import 'package:babysitter/screens/select_user_type.dart';
+
 
 import 'package:babysitter/utils/app_theme.dart';
 
@@ -68,13 +68,15 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'RobotoMono',
-        appBarTheme: AppBarTheme(backgroundColor: ThemeColor.primaryColor,iconTheme: IconThemeData(
+        appBarTheme: AppBarTheme(backgroundColor:Colors.transparent,elevation: 0,
+          iconTheme: IconThemeData(
           color: Colors.black, //change your color here
+
         ),),
         primaryColor: const Color(0xFFfcce01), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0XFFd6ecff))
       ),
 
-      home: WelcomeScreen()
+      home: SelectUserTypeScreen()
 
 
 

@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:babysitter/components/button.dart';
+import 'package:babysitter/screens/login/login_screen.dart';
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:babysitter/utils/size_config.dart';
 import 'package:babysitter/utils/validations.dart';
@@ -12,6 +13,8 @@ import 'otp_screen.dart';
 
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen(this.groupName);
+  final String groupName;
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -33,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
            appBar: AppBar(
              centerTitle: true,
              elevation: 0,
-             title: Text('create account',style: TextStyle(color: Colors.black),),
+             title: Text('create ${widget.groupName} account',style: TextStyle(color: Colors.black),),
 
 
 
@@ -43,92 +46,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                mainAxisAlignment: MainAxisAlignment.start,
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
-                 Container(
-                   padding: EdgeInsets.only(left: 20),
-                   child: Text("choose user type",style: TextStyle(fontSize: 16),),),
-                 Container(
-                   padding: EdgeInsets.only(left: 20,right: 20,top: 20),
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                     children: [
-                       InkWell(
-                         onTap: (){
-                           if(loginRepo.isParent){
 
-                           }else{
-                             loginRepo.groupName = 'parent';
-                             loginRepo.isParent = true;
-                             loginRepo.isNanny = false;
-                           }
-                         },
-                         child: Container(
-                           width: size.width/3,
-                           height: size.height/16,
-
-                           decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(8.0),
-                             border: Border.all(color: Colors.black,width: 1),
-                             color: loginRepo.isParent ?ThemeColor.color1 :Colors.grey[200],
-                             boxShadow: loginRepo.isParent ?  [
-                               const BoxShadow(
-                                 color: Colors.black,
-                                 blurRadius: 2.0,
-                                 spreadRadius: 0.0,
-                                 offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                               )
-                             ] :[],
-                           ),
-                           child:  Center(child: Text('Parent')),
-                         ),
-                       ),
-                       InkWell(
-
-                           onTap: () {
-                             if (loginRepo.isNanny) {
-
-                             } else {
-                               loginRepo.isParent = false;
-                               loginRepo.isNanny = true;
-                               loginRepo.groupName = 'nanny';
-                             }
-
-
-                         },
-                         child:  Container(
-                           width: size.width/3,
-                           height: size.height/16,
-
-                           decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(8.0),
-                             border: Border.all(color: Colors.black,width: 1),
-                             color: loginRepo.isNanny ?ThemeColor.color1 :Colors.grey[200],
-                               boxShadow: loginRepo.isNanny ?  [
-                               const BoxShadow(
-                                 color: Colors.black,
-                                 blurRadius: 2.0,
-                                 spreadRadius: 0.0,
-                                 offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                               )
-                               ] :[]
-
-                           ),
-                           child:  Center(child: Text('Nanny')),
-                         ),
-                       ),
-                     ],
-                   ),
-                 ),
                  Container(
 
-                   margin: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
+                   margin: EdgeInsets.symmetric(horizontal: 10,vertical: 40),
                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
-                   decoration: BoxDecoration( color: ThemeColor.cardBackground, border: Border.all(color: Colors.black,width:2),
-                     borderRadius: BorderRadius.all(
-                       Radius.circular(10.toWidth),
-                     ),
 
-
-                     ),
                    child: Form(
                        key: _formKey,
                        child: Container(
@@ -138,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                            children: <Widget>[
 
                              Container(
-
+                               padding: EdgeInsets.symmetric(vertical: 10),
 
                                child: TextFormField(
 
@@ -230,6 +153,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                        Radius.circular(10.toWidth),
                                      ),
                                    ),
+                                   suffixIcon: loginRepo.isValidEmail ?
+
+                                   Icon(Icons.check_circle,color: Colors.green,) :
+                                   Icon(Icons.check_circle,color: Colors.black,)
+                                     ,
 
                                    hintText: 'email',
                                    hintStyle: TextStyle(
@@ -241,6 +169,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                                      labelStyle: TextStyle(color: ThemeColor.black)
                                  ),
+                                 onChanged: (String value){
+                                   String? response = Validations.validateEmail(value);
+                                   if(response == null){
+                                     loginRepo.isValidEmail = true;
+                                   }else{
+                                     loginRepo.isValidEmail = false;
+                                   }
+                                 },
                                  validator: (value) =>  Validations.validateEmail(value!),
                                ),
                              ),
@@ -316,7 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                          Navigator.push(context, MaterialPageRoute(builder: (context){
                                            return OtpScreen(username: loginRepo.usernameController.text.trim(),
                                              password: loginRepo.passwordController.text.trim(),
-                                             email:loginRepo.emailController.text.trim(),groupName: 'Nanny',);
+                                             email:loginRepo.emailController.text.trim(),groupName: widget.groupName,);
                                          }));
                                        }else{
 
@@ -335,11 +271,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                  TextButton(onPressed: (){
                                    Navigator.of(context).pop();
                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                     return OtpScreen(username: "asdasdasd",
-                                       password: "asdasdasd",
-                                       email:"asdasdasd",groupName: 'Nanny',);
+                                     return  LoginScreen();
                                    }));
-                                 }, child: const Text("log in",style: TextStyle(color:ThemeColor.color1,fontWeight: FontWeight.bold,fontSize: 17),))
+                                 }, child: const Text("log in",style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold,fontSize: 17),))
                                ],
                              )
 
