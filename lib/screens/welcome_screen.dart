@@ -1,11 +1,13 @@
 import 'package:babysitter/components/button.dart';
 import 'package:babysitter/screens/login/login_screen.dart';
+import 'package:babysitter/screens/profiles/create_nanny_profile_screen.dart';
+import 'package:babysitter/screens/profiles/profile_repository.dart';
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:babysitter/utils/size_config.dart';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:geolocator/geolocator.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -16,7 +18,18 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
+
+
 class _WelcomeScreenState extends State<WelcomeScreen> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -94,7 +107,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=> LoginScreen()));
+                         //   Navigator.push(context, MaterialPageRoute(builder:(context)=> LoginScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder:(context)=>
+                                ChangeNotifierProvider(create: (_)=>ProfileRepository.instance(),
+                                child: CreateNannyProfileScreen())));
                           },
                             child: Button('Get Started', size))
                       ],
