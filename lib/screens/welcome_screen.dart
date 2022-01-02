@@ -2,12 +2,15 @@ import 'package:babysitter/components/button.dart';
 import 'package:babysitter/screens/login/login_screen.dart';
 import 'package:babysitter/screens/profiles/create_nanny_profile_screen.dart';
 import 'package:babysitter/screens/profiles/profile_repository.dart';
+import 'package:babysitter/screens/select_user_type.dart';
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:babysitter/utils/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
+
+import 'login/otp_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -107,10 +110,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                         InkWell(
                           onTap: (){
-                         //   Navigator.push(context, MaterialPageRoute(builder:(context)=> LoginScreen()));
-                            Navigator.push(context, MaterialPageRoute(builder:(context)=>
-                                ChangeNotifierProvider(create: (_)=>ProfileRepository.instance(),
-                                child: CreateNannyProfileScreen())));
+                          Navigator.push(context, MaterialPageRoute(builder:(context)=> SelectUserTypeScreen()));
+
+
                           },
                             child: Button('Get Started', size))
                       ],

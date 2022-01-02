@@ -1,32 +1,15 @@
 {
   "auth": {
-    "babysitterb31fbeb7": {
+    "babysitter8dbc190d": {
       "service": "Cognito",
+      "serviceType": "imported",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
-      "customAuth": false,
-      "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [],
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      }
+      "customAuth": false
     }
   },
   "storage": {
-    "s3ff8a8110": {
+    "s3060cc0af": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": []

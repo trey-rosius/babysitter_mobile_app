@@ -1,5 +1,7 @@
 
 import 'package:babysitter/components/button.dart';
+import 'package:babysitter/screens/profiles/create_nanny_profile_screen.dart';
+import 'package:babysitter/screens/profiles/profile_repository.dart';
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:babysitter/utils/validations.dart';
 import 'package:flutter/material.dart';
@@ -120,9 +122,27 @@ class _OtpScreenState extends State<OtpScreen> {
                               padding: EdgeInsets.all(10),
                               margin: EdgeInsets.all(20),
                               child: const Center(child: CircularProgressIndicator()),
-                            ) :  Button('confirm account',size)
+                            ) :  InkWell(
+                              onTap: (){
+    if (_formKey.currentState!.validate()) {
+      loginRepo.confirmUser(widget.username,widget.password,widget.email, widget.groupName).then((bool value) {
+        if(value){
+
+          Navigator.push(context, MaterialPageRoute(builder:(context)=>
+              ChangeNotifierProvider(create: (_)=>ProfileRepository.instance(),
+                  child: CreateNannyProfileScreen())));
+
+        }else{
+          print("couldn't Sign User In");
+        }
+      });
+    }
+
+                              },
+                                child: Button('confirm account',size))
                           ],
                         ),
+
                       )),
                 ],
               );

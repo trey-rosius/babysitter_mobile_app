@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:babysitter/components/button.dart';
+import 'package:babysitter/screens/home_page.dart';
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:babysitter/utils/date_manipulations.dart';
 import 'package:babysitter/utils/size_config.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_repository.dart';
 
 class CreateNannyProfileScreen extends StatefulWidget {
+
 
 
 
@@ -557,7 +559,7 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                             Text(
                               "My date of birth is ..",
                               style: TextStyle(
-                                  fontSize: 17, color: Colors.black),
+                                  fontSize: 16, color: Colors.black),
                             ),
                             Container(
                               padding: EdgeInsets.all(15),
@@ -577,14 +579,14 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                                       ? Text(
                                     "DD/MM'YYYY",
                                     style:
-                                    TextStyle(fontSize: 20),
+                                    TextStyle(fontSize: 16),
                                   )
                                       : Text(
                                       profileRepo
                                           .dateOfBirthController
                                           .text,
                                       style:
-                                      TextStyle(fontSize: 20)),
+                                      TextStyle(fontSize: 16)),
                                   Icon(Icons.calendar_today)
                                 ],
                               ),
@@ -592,7 +594,7 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                             Text(
                               "You are "+profileRepo.age.toString()+" yrs old",
                               style: TextStyle(
-                                  fontSize: 17, color: Colors.black),
+                                  fontSize: 16, color: ThemeColor.primaryColor),
                             ),
                           ],
                         ),
@@ -651,7 +653,7 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                                           child: Text(
                                             "Male",
                                             style:
-                                            TextStyle(fontSize: 20),
+                                            TextStyle(fontSize: 16),
                                           ))
                                     ]),
                                   ),
@@ -688,7 +690,7 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                                           child: Text(
                                             "Female",
                                             style:
-                                            TextStyle(fontSize: 20),
+                                            TextStyle(fontSize: 16),
                                           ))
                                     ]),
                                   ),
@@ -737,27 +739,33 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                            print(profileRepo.firstNamesController.text);
                            print(profileRepo.lastNamesController.text);
 
-/*
 
-                                          profileRepo.saveUserProfileDetails().then((_){
 
-                                            print("save to database");
-                                            Navigator.push(context, MaterialPageRoute(builder: (context){
-                                              return MultiProvider(
-                                                providers: [
-                                                  ChangeNotifierProvider(create: (_) => ProfileRepository.instance(),),
-                                                  ChangeNotifierProvider(create: (_) => PostRepository.instance(),),
-                                                  ChangeNotifierProvider(create: (_) => SharedPrefsUtils.instance(),),
+                                          profileRepo.createNannyAccount(context, 'NANNY').then((bool value){
 
-                                                ],
-                                                child:HomePage(),
+                                            if(value){
+                                              print("save to database");
+                                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                                return MultiProvider(
+                                                  providers: [
+                                                    ChangeNotifierProvider(create: (_) => ProfileRepository.instance(),),
+                                                    //   ChangeNotifierProvider(create: (_) => PostRepository.instance(),),
+                                                    //   ChangeNotifierProvider(create: (_) => SharedPrefsUtils.instance(),),
 
-                                              );
-                                            }));
+                                                  ],
+                                                  child:HomePage(),
+
+                                                );
+                                              }));
+                                            }else{
+                                              print('an error occured');
+                                            }
+
+
 
                                           });
 
-*/
+
 
 
                          }

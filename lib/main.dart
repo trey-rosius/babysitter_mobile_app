@@ -1,14 +1,9 @@
 
-
-import 'package:babysitter/screens/select_user_type.dart';
 import 'package:babysitter/screens/welcome_screen.dart';
-
-
-import 'package:babysitter/utils/app_theme.dart';
-
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
+import 'package:amplify_api/amplify_api.dart';
 import 'package:flutter/material.dart';
 import 'amplifyconfiguration.dart';
-
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 
@@ -32,6 +27,8 @@ class _MyAppState extends State<MyApp> {
       await Amplify.addPlugins([
 
         AmplifyAuthCognito(),
+        AmplifyAPI(),
+        AmplifyStorageS3()
 
       ]);
 

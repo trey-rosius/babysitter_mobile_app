@@ -10,6 +10,8 @@ import 'package:image_cropper/image_cropper.dart';
 
 import 'package:uuid/uuid.dart';
 
+import 'package:amplify_api/amplify_api.dart';
+
 
 class ProfileRepository extends ChangeNotifier {
 
@@ -133,6 +135,114 @@ class ProfileRepository extends ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
+  Future<bool> createNannyAccount(BuildContext context,String group) async {
+   print(firstNamesController.text);
+   print(lastNamesController.text);
+   print(aboutController.text);
+   print("email is "+ email);
+   print("latitude is  $latitude");
+   print("longitude is $longitude");
+   print("username is"+username);
+    loading = true;
+
+    try {
+      String graphQLDocument =
+      '''
+      mutation create(
+            \$username: String!
+            \$email: AWSEmail!
+            \$type:UserType!
+            \$firstName:String!
+            \$lastName:String!
+            \$profilePicUrl:String!
+            \$day:Int!
+            \$month:Int!
+            \$year:Int!
+            \$dateOfBirth:AWSDate!
+            \$age:Int!
+            \$male:Boolean!
+            \$female:Boolean!
+            \$address:String!
+            \$about:String!
+            \$longitude:Float!
+            \$latitude:Float!
+            \$status:UserAccountStatus!) {
+  createUser(user: {
+  about: \$about, address: \$address, age: \$age, 
+  dateOfBirth: \$dateOfBirth, day: \$day, email: \$email, female: \$female, 
+  firstName: \$firstName, lastName: \$lastName, latitude: \$latitude, longitude: \$longitude, male: \$male, month: \$month, 
+  profilePicUrl: \$profilePicUrl,status: \$status, type: \$type, username: \$username, year: \$year}) {
+    about
+    address
+    age
+    createdOn
+    dateOfBirth
+    day
+    email
+    female
+    firstName
+    id
+    lastName
+    latitude
+    longitude
+    male
+    month
+    profilePicUrl
+    status
+    type
+    username
+    year
+  }
+}
+      ''';
+
+      var operation = Amplify.API.mutate(
+          request: GraphQLRequest<String>(
+            document: graphQLDocument,
+            apiName: "BabySitterApi_AMAZON_COGNITO_USER_POOLS",
+            variables: {
+              "about":"aboutController.text",
+              "address":"addressController.text",
+              "age":34,
+              "dateOfBirth":"2020-10-20",
+              "day":3,
+              "email":'treyrosius@gmail.com',
+              "female":false,
+              "firstName":"firstNamesController.text",
+              "lastName":"lastNamesController.text",
+              "latitude":10.5,
+              "longitude":2.5,
+              "male":true,
+              "month":34,
+              "profilePicUrl":"rosius.jpg",
+              "status":"VERIFIED",
+              "type":'NANNY',
+              "username":"roro",
+              "year":2022
+            },
+          ));
+
+      var response = await operation.response;
+
+      var data = response.data;
+
+      print('Mutation result is' + data);
+      print('Mutation error: ' + response.errors.toString());
+
+
+      loading = false;
+      return true;
+
+    } catch (ex) {
+
+      print(ex.toString());
+      loading = false;
+      return false;
+
+    }
+
+
+  }
 
 
 
@@ -236,7 +346,7 @@ class ProfileRepository extends ChangeNotifier {
       metadata['name'] = "user_$uuid";
 
       metadata['desc'] = 'A profile picture ';
-      S3UploadFileOptions  options = S3UploadFileOptions(accessLevel: StorageAccessLevel.guest, metadata: metadata);
+      S3UploadFileOptions  options = S3UploadFileOptions(accessLevel: StorageAccessLevel.guest, metadata: metadata,);
       try {
       UploadFileResult result  =  await Amplify.Storage.uploadFile(
             key: uuid,

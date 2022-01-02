@@ -1,8 +1,9 @@
 import 'dart:ui';
 import 'package:babysitter/components/button.dart';
-import 'package:babysitter/components/image_button.dart';
-import 'package:babysitter/screens/login/register_screen.dart';
-import 'package:babysitter/screens/select_user_type.dart';
+import 'package:babysitter/screens/profiles/create_nanny_profile_screen.dart';
+import 'package:babysitter/screens/profiles/profile_repository.dart';
+
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:babysitter/utils/app_theme.dart';
 import 'package:babysitter/utils/size_config.dart';
 import 'package:flutter/material.dart';
@@ -203,24 +204,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                         loginRep.login().then((bool isSignedIn){
                                           if(isSignedIn) {
                                             print("signed In");
-                                            /*
+
                                                            loginRep.retrieveCurrentUser().then((AuthUser authUser) {
 
-                                                             Navigator.push(context, MaterialPageRoute(builder: (context){
-                                                               // return RegisterScreen();
-                                                               //return LoginScreen();
-
-                                                               return ChangeNotifierProvider(create: (_)=>ProfileRepository.instance(),
-                                                                 child: EditProfileScreen(authUser.userId),);
-
-
-                                                             }));
+                                                             Navigator.push(context, MaterialPageRoute(builder:(context)=>
+                                                                 ChangeNotifierProvider(create: (_)=>ProfileRepository.instance(),
+                                                                     child: CreateNannyProfileScreen())));
 
 
 
                                                            });
 
-*/
+
 
 
                                           }
