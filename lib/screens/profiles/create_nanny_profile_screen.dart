@@ -623,7 +623,7 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                               children: [
                                 InkWell(
                                   onTap:(){
-                                    //profileRepo.onSexSelected();
+                                    profileRepo.onSexSelected();
 
                                   },
                                   child: Container(
@@ -662,7 +662,7 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
                                 ),
                                 InkWell(
                                   onTap: (){
-                                   // profileRepo.onSexSelected(),
+                                   profileRepo.onSexSelected();
                                   },
                                   child: Container(
 

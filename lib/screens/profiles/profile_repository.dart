@@ -135,6 +135,19 @@ class ProfileRepository extends ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
+
+  void onSexSelected() {
+    if (male) {
+      male = false;
+      female = true;
+
+    } else {
+      male = true;
+      female = false;
+
+    }
+  }
+
   Future<bool> createNannyAccount(BuildContext context,String group,String username) async {
    print(firstNamesController.text);
    print(lastNamesController.text);
