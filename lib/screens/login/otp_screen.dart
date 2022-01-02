@@ -130,7 +130,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
           Navigator.push(context, MaterialPageRoute(builder:(context)=>
               ChangeNotifierProvider(create: (_)=>ProfileRepository.instance(),
-                  child: CreateNannyProfileScreen())));
+                  child: CreateNannyProfileScreen(username: loginRepo.usernameController.text,))));
 
         }else{
           print("couldn't Sign User In");

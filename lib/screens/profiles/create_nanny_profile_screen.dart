@@ -16,7 +16,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_repository.dart';
 
 class CreateNannyProfileScreen extends StatefulWidget {
-
+  const CreateNannyProfileScreen({required this.username});
+  final String username;
 
 
 
@@ -207,11 +208,12 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
 
 
     var profileRepo = context.read<ProfileRepository>();
-/*
+
     profileRepo.retrieveEmail().then((String email){
       print("Email is"+ email);
       profileRepo.email = email;
     });
+    /*
     profileRepo.retrieveCurrentUser().then((AuthUser authUser) {
       print(authUser.username);
       print(authUser.userId);
@@ -741,7 +743,8 @@ class _CreateNannyProfileScreenState extends State<CreateNannyProfileScreen> {
 
 
 
-                                          profileRepo.createNannyAccount(context, 'NANNY').then((bool value){
+
+                                          profileRepo.createNannyAccount(context, 'NANNY',widget.username).then((bool value){
 
                                             if(value){
                                               print("save to database");

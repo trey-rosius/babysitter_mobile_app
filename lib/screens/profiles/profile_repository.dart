@@ -4,7 +4,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -135,10 +135,15 @@ class ProfileRepository extends ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
-  Future<bool> createNannyAccount(BuildContext context,String group) async {
+  Future<bool> createNannyAccount(BuildContext context,String group,String username) async {
    print(firstNamesController.text);
    print(lastNamesController.text);
    print(aboutController.text);
+   print(dateOfBirthController.text);
+
+   DateTime tempDate = DateFormat("yyyy-MM-dd").parse("$year-$month-$day");
+   String date = DateFormat("yyyy-MM-dd").format(tempDate);
+   print("date is $date");
    print("email is "+ email);
    print("latitude is  $latitude");
    print("longitude is $longitude");
@@ -201,24 +206,24 @@ class ProfileRepository extends ChangeNotifier {
             document: graphQLDocument,
             apiName: "BabySitterApi_AMAZON_COGNITO_USER_POOLS",
             variables: {
-              "about":"aboutController.text",
-              "address":"addressController.text",
-              "age":34,
-              "dateOfBirth":"2020-10-20",
-              "day":3,
-              "email":'treyrosius@gmail.com',
-              "female":false,
-              "firstName":"firstNamesController.text",
-              "lastName":"lastNamesController.text",
-              "latitude":10.5,
-              "longitude":2.5,
-              "male":true,
-              "month":34,
-              "profilePicUrl":"rosius.jpg",
+              "about":aboutController.text,
+              "address":addressController.text,
+              "age":age,
+              "dateOfBirth":date,
+              "day":day,
+              "email":email,
+              "female":female,
+              "firstName":firstNamesController.text,
+              "lastName":lastNamesController.text,
+              "latitude":latitude,
+              "longitude":longitude,
+              "male":male,
+              "month":month,
+              "profilePicUrl":profilePic,
               "status":"VERIFIED",
-              "type":'NANNY',
-              "username":"roro",
-              "year":2022
+              "type":group,
+              "username":username,
+              "year":year
             },
           ));
 
@@ -387,7 +392,7 @@ class ProfileRepository extends ChangeNotifier {
     res.forEach((element) {
       print("element is"+element.value);
     });
-    return res[3].value;
+    return res[4].value;
   }
   Future<AuthUser>retrieveCurrentUser() async{
     AuthUser authUser = await Amplify.Auth.getCurrentUser();

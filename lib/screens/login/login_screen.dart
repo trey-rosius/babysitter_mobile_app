@@ -209,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                                              Navigator.push(context, MaterialPageRoute(builder:(context)=>
                                                                  ChangeNotifierProvider(create: (_)=>ProfileRepository.instance(),
-                                                                     child: CreateNannyProfileScreen())));
+                                                                     child: CreateNannyProfileScreen(username: loginRep.usernameController.text,))));
 
 
 
